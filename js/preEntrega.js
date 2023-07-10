@@ -5,7 +5,25 @@ function cuotas() {
   }
 }
 
-function rebaja(tipo) {
+const prendas = [
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "pollera", price: 400, size: "S", onSale: true },
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "top", price: 100, size: "M", onSale: false },
+  { title: "top", price: 100, size: "M", onSale: false },
+];
+
+const rebaja = (tipo) => {
   switch (tipo) {
     case "vestidos":
       console.log("estas prendas están en rebaja!");
@@ -25,14 +43,12 @@ function rebaja(tipo) {
       console.warn("la prenda que seleccionaste no esta disponible :(");
       break;
   }
-}
+};
 
-function consultarPrendas() {
+const consultarPrendas = () => {
   let respuesta = confirm("deseas saber qué prendas se encuentran en rebaja?");
-  if (respuesta === true) {
-    let tipo = prompt(
-      "ingresa el tipo de prenda que te haya interesado!"
-    );
+  if (respuesta) {
+    let tipo = prompt("ingresa el tipo de prenda que te haya interesado!");
     rebaja(tipo);
     cuotas();
   } else {
@@ -40,4 +56,6 @@ function consultarPrendas() {
       "esperamos que la próxima encuentres algo que sea de tu interés <3"
     );
   }
-}
+};
+
+consultarPrendas();
