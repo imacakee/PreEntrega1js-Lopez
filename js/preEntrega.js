@@ -1,47 +1,140 @@
-function cuotas() {
+const cuotas = () => {
   console.log("todas nuestras prendas tienen:");
   for (let i = 1; i <= 6; i++) {
     console.log(i + " cuota(s) sin interés");
   }
-}
+};
+
+// 25% descuento
+const discount = 0.75;
+const mapDiscount = (arr) => {
+  return arr.map((item) => {
+    item.price = item.price * discount;
+    return item;
+  });
+};
 
 const prendas = [
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "pollera", price: 400, size: "S", onSale: true },
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "top", price: 100, size: "M", onSale: false },
-  { title: "top", price: 100, size: "M", onSale: false },
+  {
+    title: "tapado rosa",
+    price: 900,
+    size: "XL",
+    onSale: false,
+    type: "abrigos",
+  },
+  {
+    title: "suéter púrpura",
+    price: 350,
+    size: "M",
+    onSale: true,
+    type: "buzos",
+  },
+  {
+    title: "remera manga corta",
+    price: 250,
+    size: "M",
+    onSale: true,
+    type: "remeras",
+  },
+  {
+    title: "guantes",
+    price: 550,
+    size: "único",
+    onSale: false,
+    type: "accesorios",
+  },
+  { title: "poncho", price: 600, size: "M", onSale: false, type: "abrigos" },
+  {
+    title: "mochila vintage",
+    price: 1000,
+    size: "none",
+    onSale: false,
+    type: "accesorios",
+  },
+  {
+    title: "jean vintage",
+    price: 1200,
+    size: "S",
+    onSale: false,
+    type: "pantalones",
+  },
+  {
+    title: "sombrero shantung",
+    price: 500,
+    size: "M",
+    onSale: false,
+    type: "accesorios",
+  },
+  {
+    title: "chaqueta de cuero",
+    price: 900,
+    size: "XL",
+    onSale: true,
+    type: "abrigos",
+  },
+  {
+    title: "converse negros",
+    price: 1200,
+    size: "40",
+    onSale: true,
+    type: "calzado",
+  },
+  { title: "top", price: 100, size: "M", onSale: true, type: "remeras" },
+  {
+    title: "camperón pana",
+    price: 1000,
+    size: "L",
+    onSale: false,
+    type: "abrigos",
+  },
+  {
+    title: "pantalón pana",
+    price: 600,
+    size: "S",
+    onSale: true,
+    type: "pantalones",
+  },
+  {
+    title: "jean azul",
+    price: 450,
+    size: "M",
+    onSale: true,
+    type: "pantalones",
+  },
+  {
+    title: "botas cuerina",
+    price: 1500,
+    size: "36",
+    onSale: false,
+    type: "calzado",
+  },
 ];
 
-const rebaja = (tipo) => {
-  switch (tipo) {
-    case "vestidos":
-      console.log("estas prendas están en rebaja!");
-      break;
-    case "abrigos":
-      console.log("estas prendas solo están en rebaja en temporada!");
-      break;
-    case "zapatos":
-      console.log("estas prendas no se encuentran en rebaja :(");
-      break;
-    case "polleras":
-      console.log(
-        "estas prendas se encuentran en rebaja pero pueden tener algunos detalles!"
-      );
-      break;
-    default:
-      console.warn("la prenda que seleccionaste no esta disponible :(");
-      break;
+const encontrarPrenda = () => {
+  let clothingTitle = prompt(
+    "ingresa aquí el título de la prenda que sea de tu interés: "
+  );
+  const clothingFound = prendas.find(
+    (vestimenta) =>
+      vestimenta.title.toLowerCase() === clothingTitle.toLowerCase()
+  );
+  console.log(clothingFound);
+};
+
+const rebaja = (tipoPrenda) => {
+  const prendasFiltradas = prendas.filter(
+    (prenda) =>
+      prenda.type.toLowerCase() === tipoPrenda.toLowerCase() && prenda.onSale
+  );
+  //Preguntar por prompt si quiere aplicar descuento
+  let respuesta = confirm(
+    "deseas aplicarle el descuento a las prendas encontradas?"
+  );
+  if (respuesta) {
+    const prendasDescontadas = mapDiscount(prendasFiltradas);
+    console.log(prendasDescontadas);
+  } else {
+    console.log(prendasFiltradas);
   }
 };
 
@@ -58,4 +151,4 @@ const consultarPrendas = () => {
   }
 };
 
-consultarPrendas();
+// consultarPrendas();
