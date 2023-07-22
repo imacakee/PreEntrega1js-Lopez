@@ -8,25 +8,25 @@
     <title>Second hand</title>
   </head>
   <body>
-    <h1>Second Hand</h1>
-    <h2>Día de rebajas!</h2>
-    <ul>
-      <li>Pantalones</li>
-      <li>Abrigos</li>
-      <li>Calzado</li>
-      <li>Accesorios</li>
-      <li>Buzos</li>
-      <li>Remeras</li>
-    </ul>
-    <h1>Intrucciones:</h1>
-    <hr>
-    <h2>Consultar prendas</h2>
-    <p>
-      Escribe en consola <code>consultarPrendas()</code> para consultar que
-      prendas estan en rebaja y aplicarles descuento
-    </p>
-    <hr>
-    <h2>Encuentra una prenda</h2>
-    <p>Escribe en consola <code>encontrarPrenda()</code> para encontrar una prenda en específico</p>
+    <select name="prices" id="sltPrice" onchange="changeFilter()">
+      <option value="none">Ordenar por:</option>
+      <option value="asc">Menor precio</option>
+      <option value="dsc">Mayor precio</option>
+    </select>
+    <select name="talles" id="sltTalles" onchange="changeFilter()">
+      <option value="none">Talles</option>
+      <option value="único">Único</option>
+      <option value="XS">XS</option>
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="XL">XL</option>
+    </select>
+    <select name="onSale" id="sltSale" onchange="changeFilter()">
+      <option value="none">Sale</option>
+      <option value="1">En oferta!</option>
+      <option value="0">Precio estandar</option>
+    </select>
+    <button onclick="resetFilters()">Limpiar filtros</button>
+    <div id="listadoPrendas"></div>
   </body>
 </html>

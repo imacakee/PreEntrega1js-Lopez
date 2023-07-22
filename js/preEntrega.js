@@ -1,19 +1,3 @@
-const cuotas = () => {
-  console.log("todas nuestras prendas tienen:");
-  for (let i = 1; i <= 6; i++) {
-    console.log(i + " cuota(s) sin interés");
-  }
-};
-
-// 25% descuento
-const discount = 0.75;
-const mapDiscount = (arr) => {
-  return arr.map((item) => {
-    item.price = item.price * discount;
-    return item;
-  });
-};
-
 const prendas = [
   {
     title: "tapado rosa",
@@ -110,45 +94,84 @@ const prendas = [
   },
 ];
 
-const encontrarPrenda = () => {
-  let clothingTitle = prompt(
-    "ingresa aquí el título de la prenda que sea de tu interés: "
-  );
-  const clothingFound = prendas.find(
-    (vestimenta) =>
-      vestimenta.title.toLowerCase() === clothingTitle.toLowerCase()
-  );
-  console.log(clothingFound);
+localStorage.setItem("prendas", JSON.stringify(prendas));
+
+window.addEventListener("load", () => {
+  const prendas = fetchPrendas();
+  printPrendas(prendas);
+});
+
+const fetchPrendas = () => {
+  const prendasString = localStorage.getItem("prendas");
+  return JSON.parse(prendasString);
 };
 
-const rebaja = (tipoPrenda) => {
-  const prendasFiltradas = prendas.filter(
-    (prenda) =>
-      prenda.type.toLowerCase() === tipoPrenda.toLowerCase() && prenda.onSale
-  );
-  //Preguntar por prompt si quiere aplicar descuento
-  let respuesta = confirm(
-    "deseas aplicarle el descuento a las prendas encontradas?"
-  );
-  if (respuesta) {
-    const prendasDescontadas = mapDiscount(prendasFiltradas);
-    console.log(prendasDescontadas);
+const printPrendas = (prendas) => {
+  const divPrendas = document.getElementById("listadoPrendas");
+  if (!prendas.length) {
+    divPrendas.innerHTML = `
+    <h2>no hay prendas de este talle por el momento :( </h2>
+    `;
   } else {
-    console.log(prendasFiltradas);
+    prendas.forEach((prenda) => {
+      divPrendas.innerHTML += `
+      <h3>${prenda.title}</h3
+      <p>Precio: ${prenda.price}</p>
+      <p>Talle: ${prenda.size}</p>
+      <p>${prenda.onSale ? "En oferta!!!" : "No esta en oferta :("} </p>
+      <p>Categoría: ${prenda.type}</p>
+      <hr>`;
+    });
   }
 };
 
-const consultarPrendas = () => {
-  let respuesta = confirm("deseas saber qué prendas se encuentran en rebaja?");
-  if (respuesta) {
-    let tipo = prompt("ingresa el tipo de prenda que te haya interesado!");
-    rebaja(tipo);
-    cuotas();
-  } else {
-    console.warn(
-      "esperamos que la próxima encuentres algo que sea de tu interés <3"
-    );
-  }
+const resetFilters = () => {
+  const prendasListButton = fetchPrendas();
+  clearPrendasDiv();
+  const sltPrice = document.getElementById("sltPrice");
+  const sltTalles = document.getElementById("sltTalles");
+  const sltSale = document.getElementById("sltSale");
+  sltPrice.value = "none";
+  sltTalles.value = "none";
+  sltSale.value = "none";
+  printPrendas(prendasListButton);
 };
 
-// consultarPrendas();
+const clearPrendasDiv = () => {
+  const divPrendas = document.getElementById("listadoPrendas");
+  divPrendas.innerHTML = "";
+};
+
+const changeFilter = () => {
+  let prendasList = fetchPrendas();
+  clearPrendasDiv();
+  const sltPrice = document.getElementById("sltPrice");
+  const sltTalles = document.getElementById("sltTalles");
+  const sltSale = document.getElementById("sltSale");
+  if (sltPrice.value !== "none") {
+    prendasList = sortPrendas(prendasList, sltPrice.value);
+  }
+  if (sltTalles.value !== "none") {
+    prendasList = filterBySize(prendasList, sltTalles.value);
+  }
+  if (sltSale.value !== "none") {
+    prendasList = filterBySale(prendasList, sltSale.value);
+  }
+  printPrendas(prendasList);
+};
+
+const sortPrendas = (prendasList, criterioOrden) => {
+  return prendasList.sort((a, b) => {
+    if (criterioOrden == "asc") {
+      return a.price - b.price;
+    } else {
+      return b.price - a.price;
+    }
+  });
+};
+
+const filterBySize = (prendasList, size) =>
+  prendasList.filter((prenda) => prenda.size == size);
+
+const filterBySale = (prendasList, onSale) =>
+  prendasList.filter((prenda) => prenda.onSale == onSale);
