@@ -27,6 +27,13 @@ window.addEventListener("load", async () => {
 const printPrendas = (prendas) => {
   const divPrendas = document.getElementById("listadoPrendas");
   if (!prendas.length) {
+    Swal.fire({
+      title: 'Ups!',
+      text: 'no hay prendas de este talle por el momento :(',
+      icon: 'error',
+      confirmButtonText: 'okay'
+    })
+
     divPrendas.innerHTML = `
     <h2>no hay prendas de este talle por el momento :( </h2>
     `;
