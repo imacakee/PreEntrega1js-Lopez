@@ -1,0 +1,44 @@
+.title-container {
+  width: 100%;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  padding-top: 10px;
+}
+.title-container h1 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.menu-bar {
+  position: fixed;
+  top: 50px;
+  display: flex;
+  gap: 5px;
+  background-color: white;
+  padding-top: 10px;
+}
+.menu-bar .generic-select {
+  border: none;
+  font-size: 17px;
+  background-color: rgba(175, 175, 1, 0.361);
+  height: 38px;
+  border-radius: 5px;
+  padding: 5px;
+}
+.menu-bar .generic-button {
+  border: none;
+  font-size: 17px;
+  background-color: olive;
+  color: white;
+  border-radius: 5px;
+}
+
+#listadoPrendas {
+  margin-top: 110px;
+}
+
+.badge {
+  font-size: 16px;
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -1,110 +1,28 @@
-const prendas = [
-  {
-    title: "tapado rosa",
-    price: 900,
-    size: "XL",
-    onSale: false,
-    type: "abrigos",
-  },
-  {
-    title: "suéter púrpura",
-    price: 350,
-    size: "M",
-    onSale: true,
-    type: "buzos",
-  },
-  {
-    title: "remera manga corta",
-    price: 250,
-    size: "M",
-    onSale: true,
-    type: "remeras",
-  },
-  {
-    title: "guantes",
-    price: 550,
-    size: "único",
-    onSale: false,
-    type: "accesorios",
-  },
-  { title: "poncho", price: 600, size: "M", onSale: false, type: "abrigos" },
-  {
-    title: "mochila vintage",
-    price: 1000,
-    size: "none",
-    onSale: false,
-    type: "accesorios",
-  },
-  {
-    title: "jean vintage",
-    price: 1200,
-    size: "S",
-    onSale: false,
-    type: "pantalones",
-  },
-  {
-    title: "sombrero shantung",
-    price: 500,
-    size: "M",
-    onSale: false,
-    type: "accesorios",
-  },
-  {
-    title: "chaqueta de cuero",
-    price: 900,
-    size: "XL",
-    onSale: true,
-    type: "abrigos",
-  },
-  {
-    title: "converse negros",
-    price: 1200,
-    size: "40",
-    onSale: true,
-    type: "calzado",
-  },
-  { title: "top", price: 100, size: "M", onSale: true, type: "remeras" },
-  {
-    title: "camperón pana",
-    price: 1000,
-    size: "L",
-    onSale: false,
-    type: "abrigos",
-  },
-  {
-    title: "pantalón pana",
-    price: 600,
-    size: "S",
-    onSale: true,
-    type: "pantalones",
-  },
-  {
-    title: "jean azul",
-    price: 450,
-    size: "M",
-    onSale: true,
-    type: "pantalones",
-  },
-  {
-    title: "botas cuerina",
-    price: 1500,
-    size: "36",
-    onSale: false,
-    type: "calzado",
-  },
-];
+// Mock API creada para traer prendas
+const apiURL = "https://64d01e6effcda80aff526a03.mockapi.io/api/";
+let prendas = [];
 
-localStorage.setItem("prendas", JSON.stringify(prendas));
-
-window.addEventListener("load", () => {
-  const prendas = fetchPrendas();
-  printPrendas(prendas);
-});
-
-const fetchPrendas = () => {
-  const prendasString = localStorage.getItem("prendas");
-  return JSON.parse(prendasString);
+const fetchPrendas = async () => {
+  prendas = await fetch(`${apiURL}/prendas`).then((res) => res.json());
 };
+
+window.addEventListener("load", async () => {
+  await fetchPrendas();
+  printPrendas(prendas);
+
+  //Asignación de eventos
+  const sltPrice = document.getElementById("sltPrice");
+  sltPrice.addEventListener("change", changeFilter);
+
+  const sltTalles = document.getElementById("sltTalles");
+  sltTalles.addEventListener("change", changeFilter);
+
+  const sltSale = document.getElementById("sltSale");
+  sltSale.addEventListener("change", changeFilter);
+
+  const btnReset = document.getElementById("btnReset");
+  btnReset.addEventListener("click", resetFilters);
+});
 
 const printPrendas = (prendas) => {
   const divPrendas = document.getElementById("listadoPrendas");
@@ -112,21 +30,25 @@ const printPrendas = (prendas) => {
     divPrendas.innerHTML = `
     <h2>no hay prendas de este talle por el momento :( </h2>
     `;
+    // <p>${prenda.onSale ? "En oferta!!!" : "No esta en oferta :("} </p>
   } else {
     prendas.forEach((prenda) => {
       divPrendas.innerHTML += `
       <h3>${prenda.title}</h3
       <p>Precio: ${prenda.price}</p>
       <p>Talle: ${prenda.size}</p>
-      <p>${prenda.onSale ? "En oferta!!!" : "No esta en oferta :("} </p>
+      <p>${
+        prenda.onSale
+          ? "<span class='badge badge-success'>On Sale :)</span>"
+          : "<span class='badge badge-warning'>Not On Sale :(</span>"
+      }</p>
       <p>Categoría: ${prenda.type}</p>
       <hr>`;
     });
   }
 };
 
-const resetFilters = () => {
-  const prendasListButton = fetchPrendas();
+const resetFilters = async () => {
   clearPrendasDiv();
   const sltPrice = document.getElementById("sltPrice");
   const sltTalles = document.getElementById("sltTalles");
@@ -134,7 +56,7 @@ const resetFilters = () => {
   sltPrice.value = "none";
   sltTalles.value = "none";
   sltSale.value = "none";
-  printPrendas(prendasListButton);
+  printPrendas(prendas);
 };
 
 const clearPrendasDiv = () => {
@@ -143,7 +65,7 @@ const clearPrendasDiv = () => {
 };
 
 const changeFilter = () => {
-  let prendasList = fetchPrendas();
+  let prendasList = [...prendas];
   clearPrendasDiv();
   const sltPrice = document.getElementById("sltPrice");
   const sltTalles = document.getElementById("sltTalles");
@@ -158,6 +80,7 @@ const changeFilter = () => {
     prendasList = filterBySale(prendasList, sltSale.value);
   }
   printPrendas(prendasList);
+  window.scrollTo(0, 0);
 };
 
 const sortPrendas = (prendasList, criterioOrden) => {
