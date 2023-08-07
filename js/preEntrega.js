@@ -8,6 +8,8 @@ const fetchPrendas = async () => {
 
 window.addEventListener("load", async () => {
   await fetchPrendas();
+  const loadingSpinner = document.getElementById("loadingSpinner");
+  loadingSpinner.style.display = "none";
   printPrendas(prendas);
 
   //Asignación de eventos
