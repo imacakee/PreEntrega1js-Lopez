@@ -4,16 +4,15 @@
   flex-direction: column;
   align-items: center;
 }
-
 .detalle-prenda p {
   font-size: 20px;
+  width: 50%;
+  text-align: center;
 }
-
 .detalle-prenda .imgPrenda {
   margin-top: 30px;
   width: 250px;
 }
-
 .detalle-prenda .img-btn {
   margin-top: 40px;
   width: 90px;
@@ -24,6 +23,6 @@
 
 .title-container {
   margin-left: 5px;
-} 
+}
 
 /*# sourceMappingURL=prenda.css.map */
