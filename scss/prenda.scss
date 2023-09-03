@@ -1,0 +1,27 @@
+.detalle-prenda {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    font-size: 20px;
+  }
+
+  .imgPrenda {
+    margin-top: 30px;
+    width: 250px;
+  }
+
+  .img-btn {
+    margin-top: 40px;
+    width: 90px;
+    background-color: rgba(175, 175, 1, 0.361);
+    color: olive;
+    border-radius: 5px;
+  }
+}
+
+.title-container{
+    margin-left: 5px;
+}

@@ -39,7 +39,6 @@ const printPrendas = (prendas) => {
     divPrendas.innerHTML = `
     <h2>no hay prendas de este talle por el momento :( </h2>
     `;
-    // <p>${prenda.onSale ? "En oferta!!!" : "No esta en oferta :("} </p>
   } else {
     prendas.forEach((prenda) => {
       divPrendas.innerHTML += `
@@ -51,6 +50,7 @@ const printPrendas = (prendas) => {
           ? "<span class='badge badge-success'>On Sale :)</span>"
           : "<span class='badge badge-warning'>Not On Sale :(</span>"
       }</p>
+      <a href="./prenda.html?id=${prenda.id}">Ver detalle</a>
       <p>Categoría: ${prenda.type}</p>
       <hr>`;
     });
